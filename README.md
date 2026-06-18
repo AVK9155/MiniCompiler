@@ -208,8 +208,7 @@ Sample programs are in the `/samples` folder:
 
 ## 👨‍💻 Author
 
-**AVK** — Third-year B.Tech CS student at KL University  
-API Lead, Intel Innovation Club
+**Damu Balaji** — Third-year B.Tech CS student at KL University  
 
 [![GitHub](https://img.shields.io/badge/GitHub-AVK9155-black?logo=github)](https://github.com/AVK9155)
 
