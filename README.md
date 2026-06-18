@@ -1,70 +1,220 @@
-# Getting Started with Create React App
+# 🔧 MiniCompiler
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A full-stack mini compiler that processes a simplified C-like language through all major compilation phases — lexical analysis, parsing, semantic analysis, intermediate representation, and interpretation — with a live web interface.
 
-## Available Scripts
+> Built with React (frontend) · Node.js/Express (backend) · JavaScript (compiler logic) · C (compiler stub layer)
 
-In the project directory, you can run:
+[![GitHub](https://img.shields.io/badge/GitHub-AVK9155%2FMiniCompiler-blue?logo=github)](https://github.com/AVK9155/MiniCompiler)
+![Language](https://img.shields.io/badge/Language-C--like-orange)
+![Stack](https://img.shields.io/badge/Stack-React%20%7C%20Node.js%20%7C%20C-green)
 
-### `npm start`
+---
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## 📸 Features
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- ✅ **Lexical Analysis** — Tokenizes input into keywords, identifiers, operators, literals
+- ✅ **Parsing** — Builds a parse tree from token stream
+- ✅ **Semantic Analysis** — Type checking, undeclared variable detection
+- ✅ **Intermediate Representation (IR)** — Three-address code generation
+- ✅ **Interpretation** — Executes the IR and produces output
+- ✅ **Symbol Table** — Tracks variable declarations and types
+- ✅ **Web Interface** — Write, compile, and debug code in the browser
 
-### `npm test`
+---
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## 🏗️ Architecture
 
-### `npm run build`
+```
+MiniCompiler/
+├── frontend/          # React app — code editor + output display
+│   ├── src/
+│   └── public/
+├── backend/           # Node.js/Express — API server
+│   └── server.js
+├── compiler/          # C source files — compiler stub layer
+│   ├── lexer.c
+│   ├── parser.c
+│   ├── semantic.c
+│   ├── ir.c
+│   ├── interpreter.c
+│   ├── symbol_table.c
+│   ├── main.c
+│   └── compiler.h
+├── samples/           # Sample programs in the mini-language
+└── report/            # Project documentation
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Data Flow
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```
+User Code (Browser)
+      ↓
+  React Frontend
+      ↓  (HTTP POST /compile)
+  Express Backend
+      ↓
+  Compiler Logic (JS)
+  ┌─────────────────────────┐
+  │  Lexer → Tokens         │
+  │  Parser → Parse Tree    │
+  │  Semantic → Checked AST │
+  │  IR Generator → TAC     │
+  │  Interpreter → Output   │
+  └─────────────────────────┘
+      ↓
+  JSON Response
+      ↓
+  React Frontend (Tokens Table, Symbol Table, IR, Output)
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+---
 
-### `npm run eject`
+## 🚀 Getting Started
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### Prerequisites
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- [Node.js](https://nodejs.org/) v16+
+- npm v8+
+- GCC (optional — for C layer compilation)
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### 1. Clone the Repository
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+```bash
+git clone https://github.com/AVK9155/MiniCompiler.git
+cd MiniCompiler
+```
 
-## Learn More
+### 2. Start the Backend
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+```bash
+cd backend
+npm install
+node server.js
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+> Backend runs on `http://localhost:5000`
 
-### Code Splitting
+### 3. Start the Frontend
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+```bash
+cd frontend
+npm install
+npm start
+```
 
-### Analyzing the Bundle Size
+> Frontend runs on `http://localhost:3000`
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+### 4. (Optional) Compile the C Layer
 
-### Making a Progressive Web App
+```bash
+cd compiler
+gcc -o minicompiler main.c lexer.c parser.c semantic.c ir.c interpreter.c symbol_table.c
+./minicompiler
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+---
 
-### Advanced Configuration
+## 📝 Supported Language Syntax
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+The compiler supports a simplified C-like language:
 
-### Deployment
+```c
+// Variable declarations
+int x = 10;
+int y = 20;
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+// Arithmetic
+int z = x + y * 2;
 
-### `npm run build` fails to minify
+// If-else
+if (z > 30) {
+    int result = z - 10;
+} else {
+    int result = z + 10;
+}
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+// While loop
+int i = 0;
+while (i < 5) {
+    i = i + 1;
+}
+```
+
+### Supported Features
+
+| Feature | Status |
+|---|---|
+| `int` declarations | ✅ |
+| Arithmetic (`+`, `-`, `*`, `/`) | ✅ |
+| Comparison operators | ✅ |
+| `if` / `else` | ✅ |
+| `while` loop | ✅ |
+| Nested expressions | ✅ |
+| Semantic error detection | ✅ |
+| `float` type | 🔄 Planned |
+| Functions | 🔄 Planned |
+| Arrays | 🔄 Planned |
+
+---
+
+## 🖥️ API Reference
+
+### `POST /compile`
+
+Compiles the provided source code and returns all compilation phase outputs.
+
+**Request Body:**
+```json
+{
+  "code": "int x = 5;\nint y = x + 3;"
+}
+```
+
+**Response:**
+```json
+{
+  "tokens": [...],
+  "symbolTable": [...],
+  "ir": [...],
+  "output": "...",
+  "errors": []
+}
+```
+
+---
+
+## 📂 Sample Programs
+
+Sample programs are in the `/samples` folder:
+
+| File | Description |
+|---|---|
+| `hello.c` | Basic variable declaration and arithmetic |
+| `loop.c` | While loop example |
+| `conditions.c` | If-else branching |
+
+---
+
+## 🛠️ Tech Stack
+
+| Layer | Technology |
+|---|---|
+| Frontend | React, HTML, CSS, JavaScript |
+| Backend | Node.js, Express.js |
+| Compiler Logic | JavaScript |
+| C Stub Layer | GCC / C99 |
+
+---
+
+## 👨‍💻 Author
+
+**AVK** — Third-year B.Tech CS student at KL University  
+API Lead, Intel Innovation Club
+
+[![GitHub](https://img.shields.io/badge/GitHub-AVK9155-black?logo=github)](https://github.com/AVK9155)
+
+---
+
+## 📄 License
+
+This project is for educational purposes as part of a compiler design course.
